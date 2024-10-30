@@ -1,5 +1,3 @@
-#参考:https://tex2e.github.io/blog/protocol/jpki-mynumbercard-with-apdu
-
 import nfc
 import binascii
 import sys

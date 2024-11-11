@@ -65,12 +65,13 @@ tag.transceive(data)
 data = bytearray.fromhex("00B0000201")
 tag.transceive(data)
 
-data = bytearray.fromhex("00B0000003")
+data = bytearray.fromhex("00B00000FF")
 result = tag.transceive(data)
 a = result.hex()
-a = a[4:6]
+a = re.search(r"ff20(.*?)df21", a).group(0)
+a = a[-6:-4]
 a = "0x" + a
-a = int(a, 16) + 0x03
+a = int(a, 16) + 0x05
 a = format(a, 'x')
 data = bytearray.fromhex("00B00000" + a)
 result = tag.transceive(data)
@@ -83,6 +84,7 @@ birth = binascii.unhexlify(re.search(r"df24(.*?)df25", result).group(1)).decode(
 birth = birth[1:]
 sex = re.search(r"df25(.*?)9000", result).group(1)
 sex = sex[2:]
+sex = sex[:2]
 
 if sex=="31":
     sex = "男"
